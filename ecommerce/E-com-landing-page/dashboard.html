@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Outfit Inspo - Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background:white;
+      color: #333;
+    }
+    nav {
+      background:#091887;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+    }
+    nav button {
+      background: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #091887;
+      transition: background 0.3s;
+    }
+    nav button:hover {
+      background:#091887;
+      color: white;
+    }
+    h2 {
+      margin: 1.5rem 0 1rem 0;
+      padding-left: 1rem;
+      color:#091887;
+    }
+    section {
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+      padding: 0 1rem;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.8rem;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .card:hover {
+      transform: none;
+      box-shadow: 0 10px 20px rgb(0 0 0 / 0.15);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      background: #f9f9f9;
+    }
+    .card h3 {
+      margin: 1rem;
+      font-size: 1.1rem;
+      flex-grow: 0;
+      color:#091887;
+    }
+    .card p {
+      margin: 0 1rem 1rem;
+      font-size: 0.95rem;
+      flex-grow: 1;
+      color: #555;
+    }
+    .card span.price {
+      margin: 0 1rem 0.5rem;
+      font-weight: bold;
+      color: #808b22;
+    }
+    .card button {
+      margin: 0 1rem 1rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      background: #447ab4;
+      color: white;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+      align-self: start;
+    }
+    .card button:hover {
+      background:#cf601b;
+    }
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 400px;
+      width: 90%;
+    }
+    .modal-content textarea {
+      width: 100%;
+      height: 80px;
+      margin-bottom: 1rem;
+    }
+    .modal-content label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .modal-content button {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Outfit Inspo Dashboard</div>
+    <button onclick="logout()">Logout</button>
+  </nav>
+
+  <section>
+    <h2>Your Wishlist</h2>
+    <div class="cards" id="wishlist"></div>
+  </section>
+
+  <section>
+    <h2>Buy Now</h2>
+    <div class="cards" id="buyNowProducts"></div>
+  </section>
+
+  <section>
+    <h2>More Products</h2>
+    <div class="cards" id="moreProducts"></div>
+  </section>
+
+  <div id="modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h3>Enter Address</h3>
+      <textarea id="addressInput" placeholder="Enter your delivery address"></textarea>
+      <label><input type="checkbox" id="codCheckbox" /> Cash on Delivery</label>
+      <button onclick="confirmOrder()">Confirm Order</button>
+    </div>
+  </div>
+dy 
+  <script>
+    const wishlistItems = [
+  { img: 'heel.jpg', title: 'Glitter Heels', desc: 'Sparkle and shine with these glamorous glitter heels.', price: 4999 },
+  { img: 'handbag.jpg', title: 'Sleek Black Handbag', desc: 'Sophisticated and versatile black handbag, perfect for any occasion.', price: 3699 }
+];
+
+const buyNowItems = [
+ { img: 'pic1.avif', title: 'Elegant Evening Gown', desc: 'A stunning reddish-purple gown, perfect for special occasions.', price: 9999 },
+  { img: 'full set.jpg', title: 'Lifestyle Accessory Set', desc: 'A curated set of sleek lifestyle accessories, including a smartwatch, earbuds, handbag.', price: 8700 }
+];
+
+const moreProducts = [
+  { img: 'coat.jpg', title: 'Classic Trench Coat', desc: 'A timeless and versatile trench coat in a warm, earthy tone, perfect for any occasion and weather.', price: 8999 },
+  { img: 'full set.jpg', title: ' Lifestyle Accessory Set', desc: 'A curated set of sleek lifestyle accessories, including a smartwatch, earbuds, handbag.', price: 8700 },
+  { img: 'pic1.avif', title: 'Elegant Evening Gown', desc: 'A stunning reddish-purple gown, perfect for special occasions.', price: 9999 }
+];
+    const buyNowList = [];
+
+    function renderAll() {
+      renderWishlist('wishlist', wishlistItems);
+      renderBuyNowProducts();
+      renderCards('moreProducts', moreProducts, true, true);
+    }
+
+    function renderCards(containerId, items, withButton = false, withHeart = false) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const img = document.createElement('img');
+        img.src = item.img;
+        img.alt = item.title;
+
+        const title = document.createElement('h3');
+        title.textContent = item.title;
+
+        const desc = document.createElement('p');
+        desc.textContent = item.desc;
+
+        const price = document.createElement('span');
+        price.className = 'price';
+        price.textContent = `₹${item.price}`;
+
+        card.appendChild(img);
+        card.appendChild(title);
+        card.appendChild(desc);
+        card.appendChild(price);
+
+        if (withHeart) {
+          const heart = document.createElement('span');
+          heart.textContent = wishlistItems.find(w => w.title === item.title) ? '❤️' : '🤍';
+          heart.style.fontSize = '1.5rem';
+          heart.style.cursor = 'pointer';
+          heart.style.margin = '1rem';
+          heart.onclick = () => toggleWishlist(item);
+          card.appendChild(heart);
+        }
+
+        const buyNowBtn = document.createElement('button');
+        buyNowBtn.textContent = 'Buy Now';
+        buyNowBtn.onclick = () => showBuyNowPopup(item);
+        card.appendChild(buyNowBtn);
+
+        container.appendChild(card);
+      });
+    }
+
+    function renderWishlist(containerId, items) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const img = document.createElement('img');
+        img.src = item.img;
+        img.alt = item.title;
+
+        const title = document.createElement('h3');
+        title.textContent = item.title;
+
+        const desc = document.createElement('p');
+        desc.textContent = item.desc;
+
+        const price = document.createElement('span');
+        price.className = 'price';
+        price.textContent = `₹${item.price}`;
+
+        const actionMenu = document.createElement('div');
+        actionMenu.style.display = 'flex';
+        actionMenu.style.flexDirection = 'column';
+        actionMenu.style.margin = '0 1rem 1rem';
+        actionMenu.style.gap = '0.5rem';
+
+        const heart = document.createElement('span');
+        heart.textContent = '❤️';
+        heart.style.fontSize = '1.5rem';
+        heart.style.cursor = 'pointer';
+        heart.style.margin = '0 1rem';
+        heart.onclick = (e) => {
+          e.stopPropagation();
+          toggleWishlist(item);
+        };
+
+        const addToCartBtn = document.createElement('button');
+        addToCartBtn.textContent = 'Add to Cart';
+        addToCartBtn.style.background = '#28a745';
+        addToCartBtn.onclick = (e) => {
+          e.stopPropagation();
+          const existing = buyNowList.find(p => p.title === item.title);
+          if (existing) {
+            existing.quantity += 1;
+          } else {
+            buyNowList.push({ ...item, quantity: 1 });
+          }
+          renderBuyNowProducts();
+        };
+
+        const buyNowBtn = document.createElement('button');
+        buyNowBtn.textContent = 'Buy Now';
+        buyNowBtn.style.background = '#ff6600';
+        buyNowBtn.onclick = (e) => {
+          e.stopPropagation();
+          showBuyNowPopup(item);
+        };
+
+        actionMenu.appendChild(addToCartBtn);
+        actionMenu.appendChild(buyNowBtn);
+
+        card.onclick = () => {
+          document.querySelectorAll('.action-menu').forEach(menu => {
+            if (menu !== actionMenu) menu.style.display = 'none';
+          });
+          actionMenu.style.display = actionMenu.style.display === 'none' ? 'flex' : 'none';
+        };
+
+        card.appendChild(img);
+        card.appendChild(title);
+        card.appendChild(desc);
+        card.appendChild(price);
+        card.appendChild(heart);
+        card.appendChild(actionMenu);
+        container.appendChild(card);
+      });
+    }
+
+    function renderBuyNowProducts() {
+      const container = document.getElementById("buyNowProducts");
+      container.innerHTML = "";
+
+      buyNowList.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const img = document.createElement("img");
+        img.src = item.img;
+        img.alt = item.title;
+
+        const title = document.createElement("h3");
+        title.textContent = item.title;
+
+        const desc = document.createElement("p");
+        desc.textContent = item.desc;
+
+        const price = document.createElement("span");
+        price.className = "price";
+        price.textContent = `₹${item.price}`;
+
+        const qtyDiv = document.createElement("div");
+        qtyDiv.style.display = "flex";
+        qtyDiv.style.alignItems = "center";
+        qtyDiv.style.gap = "10px";
+        qtyDiv.style.margin = "0 1rem 1rem";
+
+        const minusBtn = document.createElement("button");
+        minusBtn.textContent = "-";
+        minusBtn.style.background = "#ccc";
+        minusBtn.onclick = () => {
+          if (item.quantity > 1) {
+            item.quantity -= 1;
+          } else {
+            buyNowList.splice(index, 1);
+          }
+          renderBuyNowProducts();
+        };
+
+        const qtyText = document.createElement("span");
+        qtyText.textContent = `Qty: ${item.quantity}`;
+
+        const plusBtn = document.createElement("button");
+        plusBtn.textContent = "+";
+        plusBtn.style.background = "#ccc";
+        plusBtn.onclick = () => {
+          item.quantity += 1;
+          renderBuyNowProducts();
+        };
+
+        const buyNowBtn = document.createElement("button");
+        buyNowBtn.textContent = "Buy Now";
+        buyNowBtn.onclick = () => showBuyNowPopup(item);
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Remove";
+        removeBtn.style.background = "#dc3545";
+        removeBtn.onclick = () => {
+          buyNowList.splice(index, 1);
+          renderBuyNowProducts();
+        };
+
+        qtyDiv.appendChild(minusBtn);
+        qtyDiv.appendChild(qtyText);
+        qtyDiv.appendChild(plusBtn);
+
+        card.appendChild(img);
+        card.appendChild(title);
+        card.appendChild(desc);
+        card.appendChild(price);
+        card.appendChild(qtyDiv);
+        card.appendChild(buyNowBtn);
+        card.appendChild(removeBtn);
+        container.appendChild(card);
+      });
+    }
+
+    function toggleWishlist(item) {
+      const inWishlist = wishlistItems.find(i => i.title === item.title);
+      if (inWishlist) {
+        wishlistItems.splice(wishlistItems.findIndex(i => i.title === item.title), 1);
+        moreProducts.push(item);
+      } else {
+        moreProducts.splice(moreProducts.findIndex(i => i.title === item.title), 1);
+        wishlistItems.push(item);
+      }
+      renderAll();
+    }
+
+    let selectedBuyNowItem = null;
+
+    function showBuyNowPopup(item) {
+      selectedBuyNowItem = item;
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function confirmOrder() {
+      const address = document.getElementById('addressInput').value;
+      const codChecked = document.getElementById('codCheckbox').checked;
+
+      if (!address.trim()) {
+        alert("Please enter address.");
+        return;
+      }
+      if (!codChecked) {
+        alert("Please check Cash on Delivery option.");
+        return;
+      }
+
+      alert(`Order confirmed for: ${selectedBuyNowItem.title}\nDeliver to: ${address}`);
+      document.getElementById('modal').style.display = 'none';
+      document.getElementById('addressInput').value = '';
+      document.getElementById('codCheckbox').checked = false;
+    }
+
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        window.location.href = 'index.html';
+      }
+    }
+
+    renderAll();
+  </script>
+
+</body>
+</html>

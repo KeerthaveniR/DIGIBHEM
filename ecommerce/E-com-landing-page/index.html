@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Online Shopping</title>
+  <style>
+       body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f7fa;
+    }
+
+    nav {
+      background: #091887;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .auth-buttons button {
+      margin-left: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      background: white;
+      color:#091887;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: linear-gradient(to right,#091887, #90aaeb);
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin: 1rem 0;
+    }
+
+    .hero button {
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      background: white;
+      color: #091887;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .products {
+      padding: 4rem 2rem;
+      max-width: 10000px;
+      margin: auto;
+    }
+
+    .products h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color:#091887;
+    }
+
+    .product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+  gap: 1.5rem;
+  max-width: 1200px; 
+  margin: auto;
+  padding: 0 1rem;
+}
+
+.product-card {
+  background: white;
+  width: 220px;
+  height: 340px; 
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: auto;
+}
+
+.product-card img {
+  width: 180px; 
+  height: 180px;
+  object-fit: contain; 
+  border-radius: 10px;
+  margin: 0 auto;
+}
+
+    .product-card h3 {
+  margin: 0.8rem 0 0.5rem;
+  font-size: 1.1rem;
+  flex-grow: 0;
+}
+
+.product-card p {
+  font-size: 0.95rem;
+  color: #555;
+  flex-grow: 0;
+}
+
+.product-card button {
+  background: #091887;
+  color: white;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+    #about, #contact {
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    #about h2, #contact h2 {
+      text-align: center;
+      color: #091887;
+      font-size: 2rem;
+    }
+
+    #about p {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #555;
+      margin-top: 1rem;
+    }
+
+    #contact form {
+      margin-top: 2rem;
+      max-width: 600px;
+      margin-inline: auto;
+    }
+
+    #contact label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    #contact input, #contact textarea {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    #contact button {
+      background:#091887;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    footer {
+      background:#091887;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">Outfit Inspo</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="auth-buttons">
+      <button id="loginBtn">Login</button>
+      <button id="signupBtn">Sign Up</button>
+    </div>
+  </nav>
+
+  <!-- Home / Hero Section -->
+  <section class="hero" id="home">
+    <h1>Explore Top Picks</h1>
+    <p>Shop smarter with exclusive deals on premium products.</p>
+  </section>
+
+  <!-- Products Section -->
+  <section class="products" id="products">
+    <h2>Featured Products</h2>
+    <div class="product-grid">
+      <div class="product-card">
+<img src="ljacket.jpeg" alt="jacket">
+      <h3>Clothing</h3>
+      <p> Trendy looks for every vibe</p>
+    </div>
+  <div class="product-card">
+      <img src="jewel.jpg" alt="jewelry" />
+  
+      <h3>Jewellery</h3>
+      <p>Shine in style with our trendiest jewelry</p>
+    </div>
+  <div class="product-card">
+      <img src="boots.jpeg" alt="Shoes" />
+      <h3>Shoes</h3>
+      <p>From casual to classy – we’ve got your feet covered</p>
+    </div>
+  <div class="product-card">
+      <img src="bags.jpg" alt="handbags" />
+      <h3>Handbags</h3>
+      <p>Statement bags for every moment</p>
+             </div>
+    </div>
+
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2>About Outfit Inspo</h2>
+    <p>
+      At Outfit Inspo, we believe fashion is more than just clothing—it's self-expression.
+       Our mission is to inspire your everyday style with handpicked trends, timeless pieces, and bold looks that make a statement. 
+       Whether you're dressing for work, play, or a night out, we bring you curated outfits and fashion-forward essentials to elevate your wardrobe.
+
+    </p>
+  </section>
+
+
+
+  <section id="contact">
+  <h2>Contact Us</h2>
+  <form onsubmit="handleContact(event)">
+    <label for="name">Name</label>
+    <input type="text" id="name" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" required>
+
+    <label for="message">Message</label>
+    <textarea id="message" rows="4" required></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+</section>
+
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Outfit Inspo. All rights reserved.
+  </footer>
+
+<div id="authModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center;">
+  <div style="background:#fff; padding:2rem; border-radius:8px; max-width:400px; width:90%; position:relative;">
+    <span onclick="closeModal()" style="position:absolute; top:10px; right:15px; cursor:pointer; font-weight:bold;">&times;</span>
+    <h2 id="modalTitle">Login</h2>
+    <form id="authForm" onsubmit="handleAuth(event)">
+      <label>Email:</label>
+      <input type="email" id="authEmail" required style="width:100%; margin-bottom:1rem; padding:0.5rem;">
+
+      <label>Password:</label>
+      <input type="password" id="authPassword" required style="width:100%; margin-bottom:1rem; padding:0.5rem;">
+
+      <div id="signupExtra" style="display:none;">
+        <label>Confirm Password:</label>
+        <input type="password" id="confirmPassword" style="width:100%; margin-bottom:1rem; padding:0.5rem;">
+      </div>
+
+      <button type="submit" style="background:#091887; color:white; border:none; padding:0.6rem 1.2rem; border-radius:5px; cursor:pointer;">Submit</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const loginBtn = document.getElementById("loginBtn");
+  const signupBtn = document.getElementById("signupBtn");
+  const modal = document.getElementById("authModal");
+  const modalTitle = document.getElementById("modalTitle");
+  const signupExtra = document.getElementById("signupExtra");
+
+  loginBtn.onclick = () => {
+    modalTitle.textContent = "Login";
+    signupExtra.style.display = "none";
+    modal.style.display = "flex";
+  };
+
+  signupBtn.onclick = () => {
+    modalTitle.textContent = "Sign Up";
+    signupExtra.style.display = "block";
+    modal.style.display = "flex";
+  };
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  function handleAuth(event) {
+    event.preventDefault();
+    const mode = modalTitle.textContent;
+    const email = document.getElementById("authEmail").value;
+    const password = document.getElementById("authPassword").value;
+
+
+    if (mode === "Sign Up") {
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+      // Optional: store new user (mock)
+      alert("Sign up successful!");
+      window.location.href = "dashboard.html";
+    } else {
+      // Simple mock login success
+      if (email && password) {
+        window.location.href = "dashboard.html";
+      } else {
+        alert("Invalid credentials");
+      }
+    }
+  }
+
+  // Close modal if clicking outside it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      closeModal();
+    }
+  };
+
+function handleContact(event) {
+    event.preventDefault();
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    if (!name || !email || !message) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    alert("Message sent successfully!");
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("message").value = "";
+  }
+
+</script>
+
+
+</body>
+</html>
